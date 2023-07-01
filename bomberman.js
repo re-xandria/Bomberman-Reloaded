@@ -3,7 +3,7 @@ const board = [];
 const rows = 9;
 const columns = 9;
 let score = 0;
-let moves = 3;
+let moves = 30;
 let flag = false;
 
 let currTile;
