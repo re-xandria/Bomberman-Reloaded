@@ -107,8 +107,27 @@ function dragEnd() {
         }
     }
 
-    moves -= 1;
-    displayMoves = `<h2>Moves: <span id='moves'>${moves}</span></h2>`;
+    if (moves != 1) {
+        moves -= 1;
+        document.getElementById("moves").innerText = moves;
+    }
+
+    else {
+        document.getElementById("board").remove();
+        moves -= 1;
+        document.getElementById("moves").innerText = moves;
+        const reset = document.createElement("button");
+        const gameOver = document.createElement("p");
+        reset.innerText= `Reset`;
+        gameOver.innerText = `No more moves! Want to try and beat your score?`
+        document.getElementById("stats").insertAdjacentElement("afterend", reset);
+        document.getElementById("stats").insertAdjacentElement("afterend", gameOver);
+        reset.addEventListener("click", resetGame);
+    }
+}
+    
+function resetGame() {
+    location.reload();
 }
 
 function matchBombs() {
