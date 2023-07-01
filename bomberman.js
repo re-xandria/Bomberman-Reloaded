@@ -3,6 +3,8 @@ const board = [];
 const rows = 9;
 const columns = 9;
 let score = 0;
+let moves = 30;
+let flag = false;
 
 let currTile;
 let otherTile;
@@ -23,6 +25,7 @@ function randomBomb() {
 }
 
 function startGame() {
+
     for (let r = 0; r < rows; r++) {
         let row = [];
         for (let c = 0; c < columns; c++) {
@@ -68,7 +71,7 @@ function dragDrop() {
 }
 
 function dragEnd() {
-
+    flag = true;
     if (currTile.src.includes("blank") || otherTile.src.includes("blank")) {
         return;
     }
@@ -103,11 +106,14 @@ function dragEnd() {
             otherTile.src = currImg;
         }
     }
+
+    moves -= 1;
+    displayMoves = `<h2>Moves: <span id='moves'>${moves}</span></h2>`;
 }
 
 function matchBombs() {
-    //matchFive();
-    //matchFour();
+    matchFive();
+    matchFour();
     matchThree();
     document.getElementById("score").innerText = score;
 }
@@ -123,7 +129,9 @@ function matchThree() {
                 bomb1.src = "./candy-crush-master/images/blank.png";
                 bomb2.src = "./candy-crush-master/images/blank.png";
                 bomb3.src = "./candy-crush-master/images/blank.png";
-                score += 30;
+                if (flag) {
+                    score += 30;
+                }
             }
         }
     }
@@ -138,13 +146,152 @@ function matchThree() {
                 bomb1.src = "./candy-crush-master/images/blank.png";
                 bomb2.src = "./candy-crush-master/images/blank.png";
                 bomb3.src = "./candy-crush-master/images/blank.png";
-                score += 30;
+                if (flag) {
+                    score += 30;
+                }
+            }
+        }
+    }
+}
+
+function matchFour() {
+    // match 4 in a row
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns-3; c++) {
+            let bomb1 = board[r][c];
+            let bomb2 = board[r][c+1];
+            let bomb3 = board[r][c+2];
+            let bomb4 = board[r][c+3];
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && !bomb1.src.includes("blank")) {
+                bomb1.src = "./candy-crush-master/images/blank.png";
+                bomb2.src = "./candy-crush-master/images/blank.png";
+                bomb3.src = "./candy-crush-master/images/blank.png";
+                bomb4.src = "./candy-crush-master/images/blank.png";
+                if (flag) {
+                    score += 50;
+                }
+            }
+        }
+    }
+
+    for (let c = 0; c < columns; c++) {
+        for (let r = 0; r < rows-3; r++) {
+            let bomb1 = board[r][c];
+            let bomb2 = board[r+1][c];
+            let bomb3 = board[r+2][c];
+            let bomb4 = board[r+3][c];
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && !bomb1.src.includes("blank")) {
+                bomb1.src = "./candy-crush-master/images/blank.png";
+                bomb2.src = "./candy-crush-master/images/blank.png";
+                bomb3.src = "./candy-crush-master/images/blank.png";
+                bomb4.src = "./candy-crush-master/images/blank.png";
+                if (flag) {
+                    score += 50;
+                }
+            }
+        }
+    }
+}
+
+function matchFive() {
+    // match 5 in a row
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns-4; c++) {
+            let bomb1 = board[r][c];
+            let bomb2 = board[r][c+1];
+            let bomb3 = board[r][c+2];
+            let bomb4 = board[r][c+3];
+            let bomb5 = board[r][c+4];
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && bomb4.src == bomb5.src && !bomb1.src.includes("blank")) {
+                bomb1.src = "./candy-crush-master/images/blank.png";
+                bomb2.src = "./candy-crush-master/images/blank.png";
+                bomb3.src = "./candy-crush-master/images/blank.png";
+                bomb4.src = "./candy-crush-master/images/blank.png";
+                bomb5.src = "./candy-crush-master/images/blank.png";
+                if (flag) {
+                    score += 100;
+                }
+            }
+        }
+    }
+
+    for (let c = 0; c < columns; c++) {
+        for (let r = 0; r < rows-4; r++) {
+            let bomb1 = board[r][c];
+            let bomb2 = board[r+1][c];
+            let bomb3 = board[r+2][c];
+            let bomb4 = board[r+3][c];
+            let bomb5 = board[r+4][c];
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && bomb4.src == bomb5.src && !bomb1.src.includes("blank")) {
+                bomb1.src = "./candy-crush-master/images/blank.png";
+                bomb2.src = "./candy-crush-master/images/blank.png";
+                bomb3.src = "./candy-crush-master/images/blank.png";
+                bomb4.src = "./candy-crush-master/images/blank.png";
+                bomb5.src = "./candy-crush-master/images/blank.png";
+                if (flag) {
+                    score += 50;
+                }
             }
         }
     }
 }
 
 function checkValid () {
+    //checks 5 rows
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns-4; c++) {
+            let bomb1 = board[r][c];
+            let bomb2 = board[r][c+1];
+            let bomb3 = board[r][c+2];
+            let bomb4 = board[r][c+3];
+            let bomb5 = board[r][c+4];
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && bomb4.src == bomb5.src && !bomb1.src.includes("blank")) {
+                return true;
+            }
+        }
+    }
+
+    //checks 5 columns
+    for (let c = 0; c < columns; c++) {
+        for (let r = 0; r < rows-4; r++) {
+            let bomb1 = board[r][c];
+            let bomb2 = board[r+1][c];
+            let bomb3 = board[r+2][c];
+            let bomb4 = board[r+3][c];
+            let bomb5 = board[r+4][c];
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && bomb4.src == bomb5.src && !bomb1.src.includes("blank")) {
+                return true;
+            }
+        }
+    }
+
+    //checks 4 rows
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns-3; c++) {
+            let bomb1 = board[r][c];
+            let bomb2 = board[r][c+1];
+            let bomb3 = board[r][c+2];
+            let bomb4 = board[r][c+3];
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && !bomb1.src.includes("blank")) {
+                return true;
+            }
+        }
+    }
+
+    //checks 4 columns
+    for (let c = 0; c < columns; c++) {
+        for (let r = 0; r < rows-3; r++) {
+            let bomb1 = board[r][c];
+            let bomb2 = board[r+1][c];
+            let bomb3 = board[r+2][c];
+            let bomb4 = board[r+3][c];
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && !bomb1.src.includes("blank")) {
+                return true;
+            }
+        }
+    }
+
+    //checks 3 rows
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns-2; c++) {
             let bomb1 = board[r][c];
@@ -156,7 +303,7 @@ function checkValid () {
         }
     }
 
-    //check columns
+    //checks 3 columns
     for (let c = 0; c < columns; c++) {
         for (let r = 0; r < rows-2; r++) {
             let bomb1 = board[r][c];
