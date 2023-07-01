@@ -1,9 +1,9 @@
-const bombs = ["Blue", "Orange","Green", "Yellow", "Red", "Purple"];
+const bombs = ["aqua", "red","black", "pink", "yellow", "white"];
 const board = [];
 const rows = 9;
 const columns = 9;
 let score = 0;
-let moves = 30;
+let moves = 3;
 let flag = false;
 
 let currTile;
@@ -32,7 +32,7 @@ function startGame() {
             // <img class="0-0" src="./images/Red.png">
             let tile = document.createElement("img");
             tile.id = r.toString() + "-" + c.toString();
-            tile.src = "./candy-crush-master/images/" + randomBomb() + ".png";
+            tile.src = "./" + randomBomb() + "-bomb.png";
 
             //Drag Function
             tile.addEventListener("dragstart", dragStart); // click on candy, start drag function
@@ -118,8 +118,10 @@ function dragEnd() {
         document.getElementById("moves").innerText = moves;
         const reset = document.createElement("button");
         const gameOver = document.createElement("p");
-        reset.innerText= `Reset`;
-        gameOver.innerText = `No more moves! Want to try and beat your score?`
+        reset.getAttribute("button")
+        reset.innerText= `RESET`;
+        gameOver.innerText = `No more moves! Want to try and beat your score?`;
+        gameOver.style.fontSize = "x-large";
         document.getElementById("stats").insertAdjacentElement("afterend", reset);
         document.getElementById("stats").insertAdjacentElement("afterend", gameOver);
         reset.addEventListener("click", resetGame);
@@ -144,10 +146,10 @@ function matchThree() {
             let bomb1 = board[r][c];
             let bomb2 = board[r][c+1];
             let bomb3 = board[r][c+2];
-            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./candy-crush-master/images/blank.png";
-                bomb2.src = "./candy-crush-master/images/blank.png";
-                bomb3.src = "./candy-crush-master/images/blank.png";
+            if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && !bomb1.src.includes("background-tile")) {
+                bomb1.src = "./blank.png";
+                bomb2.src = "./blank.png";
+                bomb3.src = "./blank.png";
                 if (flag) {
                     score += 30;
                 }
@@ -162,9 +164,9 @@ function matchThree() {
             let bomb2 = board[r+1][c];
             let bomb3 = board[r+2][c];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./candy-crush-master/images/blank.png";
-                bomb2.src = "./candy-crush-master/images/blank.png";
-                bomb3.src = "./candy-crush-master/images/blank.png";
+                bomb1.src = "./blank.png";
+                bomb2.src = "./blank.png";
+                bomb3.src = "./blank.png";
                 if (flag) {
                     score += 30;
                 }
@@ -182,10 +184,10 @@ function matchFour() {
             let bomb3 = board[r][c+2];
             let bomb4 = board[r][c+3];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./candy-crush-master/images/blank.png";
-                bomb2.src = "./candy-crush-master/images/blank.png";
-                bomb3.src = "./candy-crush-master/images/blank.png";
-                bomb4.src = "./candy-crush-master/images/blank.png";
+                bomb1.src = "./blank.png";
+                bomb2.src = "./blank.png";
+                bomb3.src = "./blank.png";
+                bomb4.src = "./blank.png";
                 if (flag) {
                     score += 50;
                 }
@@ -200,10 +202,10 @@ function matchFour() {
             let bomb3 = board[r+2][c];
             let bomb4 = board[r+3][c];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./candy-crush-master/images/blank.png";
-                bomb2.src = "./candy-crush-master/images/blank.png";
-                bomb3.src = "./candy-crush-master/images/blank.png";
-                bomb4.src = "./candy-crush-master/images/blank.png";
+                bomb1.src = "./blank.png";
+                bomb2.src = "./blank.png";
+                bomb3.src = "./blank.png";
+                bomb4.src = "./blank.png";
                 if (flag) {
                     score += 50;
                 }
@@ -222,11 +224,11 @@ function matchFive() {
             let bomb4 = board[r][c+3];
             let bomb5 = board[r][c+4];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && bomb4.src == bomb5.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./candy-crush-master/images/blank.png";
-                bomb2.src = "./candy-crush-master/images/blank.png";
-                bomb3.src = "./candy-crush-master/images/blank.png";
-                bomb4.src = "./candy-crush-master/images/blank.png";
-                bomb5.src = "./candy-crush-master/images/blank.png";
+                bomb1.src = "./blank.png";
+                bomb2.src = "./blank.png";
+                bomb3.src = "./blank.png";
+                bomb4.src = "./blank.png";
+                bomb5.src = "./blank.png";
                 if (flag) {
                     score += 100;
                 }
@@ -242,11 +244,11 @@ function matchFive() {
             let bomb4 = board[r+3][c];
             let bomb5 = board[r+4][c];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && bomb4.src == bomb5.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./candy-crush-master/images/blank.png";
-                bomb2.src = "./candy-crush-master/images/blank.png";
-                bomb3.src = "./candy-crush-master/images/blank.png";
-                bomb4.src = "./candy-crush-master/images/blank.png";
-                bomb5.src = "./candy-crush-master/images/blank.png";
+                bomb1.src = "./blank.png";
+                bomb2.src = "./blank.png";
+                bomb3.src = "./blank.png";
+                bomb4.src = "./blank.png";
+                bomb5.src = "./blank.png";
                 if (flag) {
                     score += 50;
                 }
@@ -348,7 +350,7 @@ function slideBombs() {
         }
 
         for (let r = ind; r >= 0; r--) {
-            board[r][c].src = "./candy-crush-master/images/blank.png";
+            board[r][c].src = "./blank.png";
         }
     }
 }
@@ -356,7 +358,7 @@ function slideBombs() {
 function generateBombs() {
     for (let c = 0; c < columns; c++)  {
         if (board[0][c].src.includes("blank")) {
-            board[0][c].src = "./candy-crush-master/images/" + randomBomb() + ".png";
+            board[0][c].src = "./" + randomBomb() + "-bomb.png";
         }
     }
 }

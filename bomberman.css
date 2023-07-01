@@ -1,4 +1,5 @@
 body {
+    background-color: rgba(137, 43, 226, 50);
     color: white;
     text-align: center;
     font-family: "gyparody", sans-serif;
@@ -16,6 +17,7 @@ body {
 }
 
 #game-background {
+    opacity: 70%;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -28,6 +30,8 @@ body {
   }
 
 #main-background {
+    opacity: 90%;
+    mix-blend-mode: color-burn;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -40,10 +44,10 @@ body {
 }
 
 #board {
-    width: 450px;
-    height: 450px;
-    background-color: lightblue;
-    border: 5px solid slategray;
+    width: 630px;
+    height: 630px;
+    background-color: rgba(173, 216, 230, .5);
+    border: 5px solid #cebeea;
     border-radius: 10px;
     margin: 0 auto;
     display: flex;
@@ -51,8 +55,8 @@ body {
 }
 
 #board img {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
 }
 
 #stats {
@@ -86,13 +90,20 @@ body {
     font-size: 200px;
 }
 
-#start button {
+button {
+    background-color:rgba(150, 68, 210,.3);
+    color: #cebeea;
     font-family: "mr-eaves-modern", sans-serif;
     font-weight: 700;
     margin: 20px;
     margin-top: 70px;
     padding: 10px 60px 10px;
     border-radius: 3px;
+    border-color: #cebeea;
+}
+
+ button:hover {
+    background-color:rgba(150, 68, 210,.8);
 }
 
 #about {
@@ -132,15 +143,12 @@ body {
     margin-bottom: 10px;;
 }
 
-#about a {
+#about button{
+    width: 150px;
     display: block;
-    width: 30%;
     margin: auto;
     margin-top: 10px;
     text-align: center;
     padding: 10px 20px 10px;
-    background-color: white;
-    border-radius: 5px;
-    text-decoration: none;
-    color: black;
+    border-radius: 3px;
 }
