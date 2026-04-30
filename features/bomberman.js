@@ -32,7 +32,7 @@ function startGame() {
             // <img class="0-0" src="./images/Red.png">
             let tile = document.createElement("img");
             tile.id = r.toString() + "-" + c.toString();
-            tile.src = "./" + randomBomb() + "-bomb.png";
+            tile.src = "/assets/" + randomBomb() + "-bomb.png";
 
             //Drag Function
             tile.addEventListener("dragstart", dragStart); // click on candy, start drag function
@@ -47,7 +47,7 @@ function startGame() {
         }
         board.push(row);
     }
-    console.log(board);
+    // console.log(board);
 }
 
 function dragStart() {
@@ -147,9 +147,9 @@ function matchThree() {
             let bomb2 = board[r][c+1];
             let bomb3 = board[r][c+2];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && !bomb1.src.includes("background-tile")) {
-                bomb1.src = "./blank.png";
-                bomb2.src = "./blank.png";
-                bomb3.src = "./blank.png";
+                bomb1.src = "/assets/blank.png";
+                bomb2.src = "/assets/blank.png";
+                bomb3.src = "/assets/blank.png";
                 if (flag) {
                     score += 30;
                 }
@@ -164,9 +164,9 @@ function matchThree() {
             let bomb2 = board[r+1][c];
             let bomb3 = board[r+2][c];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./blank.png";
-                bomb2.src = "./blank.png";
-                bomb3.src = "./blank.png";
+                bomb1.src = "/assets/blank.png";
+                bomb2.src = "/assets/blank.png";
+                bomb3.src = "/assets/blank.png";
                 if (flag) {
                     score += 30;
                 }
@@ -184,10 +184,10 @@ function matchFour() {
             let bomb3 = board[r][c+2];
             let bomb4 = board[r][c+3];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./blank.png";
-                bomb2.src = "./blank.png";
-                bomb3.src = "./blank.png";
-                bomb4.src = "./blank.png";
+                bomb1.src = "/assets/blank.png";
+                bomb2.src = "/assets/blank.png";
+                bomb3.src = "/assets/blank.png";
+                bomb4.src = "/assets/blank.png";
                 if (flag) {
                     score += 50;
                 }
@@ -202,10 +202,10 @@ function matchFour() {
             let bomb3 = board[r+2][c];
             let bomb4 = board[r+3][c];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./blank.png";
-                bomb2.src = "./blank.png";
-                bomb3.src = "./blank.png";
-                bomb4.src = "./blank.png";
+                bomb1.src = "/assets/blank.png";
+                bomb2.src = "/assets/blank.png";
+                bomb3.src = "/assets/blank.png";
+                bomb4.src = "/assets/blank.png";
                 if (flag) {
                     score += 50;
                 }
@@ -224,11 +224,11 @@ function matchFive() {
             let bomb4 = board[r][c+3];
             let bomb5 = board[r][c+4];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && bomb4.src == bomb5.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./blank.png";
-                bomb2.src = "./blank.png";
-                bomb3.src = "./blank.png";
-                bomb4.src = "./blank.png";
-                bomb5.src = "./blank.png";
+                bomb1.src = "/assets/blank.png";
+                bomb2.src = "/assets/blank.png";
+                bomb3.src = "/assets/blank.png";
+                bomb4.src = "/assets/blank.png";
+                bomb5.src = "/assets/blank.png";
                 if (flag) {
                     score += 100;
                 }
@@ -244,11 +244,11 @@ function matchFive() {
             let bomb4 = board[r+3][c];
             let bomb5 = board[r+4][c];
             if (bomb1.src == bomb2.src && bomb2.src == bomb3.src && bomb3.src == bomb4.src && bomb4.src == bomb5.src && !bomb1.src.includes("blank")) {
-                bomb1.src = "./blank.png";
-                bomb2.src = "./blank.png";
-                bomb3.src = "./blank.png";
-                bomb4.src = "./blank.png";
-                bomb5.src = "./blank.png";
+                bomb1.src = "/assets/blank.png";
+                bomb2.src = "/assets/blank.png";
+                bomb3.src = "/assets/blank.png";
+                bomb4.src = "/assets/blank.png";
+                bomb5.src = "/assets/blank.png";
                 if (flag) {
                     score += 50;
                 }
@@ -350,7 +350,7 @@ function slideBombs() {
         }
 
         for (let r = ind; r >= 0; r--) {
-            board[r][c].src = "./blank.png";
+            board[r][c].src = "/assets/blank.png";
         }
     }
 }
@@ -358,7 +358,7 @@ function slideBombs() {
 function generateBombs() {
     for (let c = 0; c < columns; c++)  {
         if (board[0][c].src.includes("blank")) {
-            board[0][c].src = "./" + randomBomb() + "-bomb.png";
+            board[0][c].src = "/assets/" + randomBomb() + "-bomb.png";
         }
     }
 }
