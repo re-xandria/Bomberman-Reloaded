@@ -1,4 +1,5 @@
 body {
+    overflow: hidden;
     background-color: rgba(137, 43, 226, 50);
     color: white;
     text-align: center;
@@ -27,7 +28,7 @@ body {
     top: 0;
     bottom: 0;
     z-index: -1;
-  }
+}
 
 #main-background {
     opacity: 90%;
@@ -61,13 +62,13 @@ body {
 
 #stats {
     font-family: "gyparody", sans-serif;
-    margin-top: 80px;
-    margin-bottom: 5%;
+    /* margin-top: 80px; */
+    /* margin-bottom: 5%; */
 }
 
 #stats h1 {
-    font-size: 50px;
-    margin-bottom: -10px;
+    /* font-size: 50px;
+    margin-bottom: -10px; */
 }
 
 #start {
@@ -82,7 +83,7 @@ body {
     display: block;
     margin: auto;
     margin-top: 100px;
-    width: 50%; 
+    width: 50%;
 }
 
 #start h1 {
@@ -91,7 +92,7 @@ body {
 }
 
 button {
-    background-color:rgba(150, 68, 210,.3);
+    background-color: rgba(150, 68, 210, .3);
     color: #cebeea;
     font-family: "mr-eaves-modern", sans-serif;
     font-weight: 700;
@@ -102,8 +103,8 @@ button {
     border-color: #cebeea;
 }
 
- button:hover {
-    background-color:rgba(150, 68, 210,.8);
+button:hover {
+    background-color: rgba(150, 68, 210, .8);
 }
 
 #about {
@@ -140,10 +141,11 @@ button {
 #about p {
     font-size: 18px;
     font-weight: 100;
-    margin-bottom: 10px;;
+    margin-bottom: 10px;
+    ;
 }
 
-#about button{
+#about button {
     width: 150px;
     display: block;
     margin: auto;
