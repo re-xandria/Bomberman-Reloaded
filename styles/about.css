@@ -1,0 +1,57 @@
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#about {
+    width: min(90%, 520px);
+    margin: 60px auto;
+    text-align: left;
+    line-height: 1.6;
+}
+
+#about h1 {
+    font-family: var(--font-display);
+    font-weight: 100;
+    font-size: clamp(26px, 4vw, 40px);
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: solid;
+}
+
+#about h2 {
+    font-size: clamp(20px, 3vw, 30px);
+    margin: 10px 0;
+}
+
+#about h3 {
+    font-size: clamp(16px, 2.5vw, 20px);
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#about p {
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: 100;
+    margin-bottom: 10px;
+}
+
+#about button {
+    display: inline-block;
+    width: 150px;
+    padding: 10px 20px;
+    margin: 8px;
+}
+
+@media (max-width: 480px) {
+    #about {
+        margin: 30px auto;
+    }
+
+    #about button {
+        display: block;
+        width: 100%;
+        margin: 8px 0;
+    }
+}

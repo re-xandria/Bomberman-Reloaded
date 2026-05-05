@@ -1,0 +1,29 @@
+body {
+    overflow: hidden;
+}
+
+#start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 8px;
+}
+
+#start img {
+    width: clamp(180px, 45vw, 480px);
+    margin-bottom: 16px;
+}
+
+#start button {
+    width: clamp(160px, 25vw, 260px);
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    #start button {
+        width: 72vw;
+    }
+}
