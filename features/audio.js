@@ -1,145 +1,117 @@
-const inputSlider = {
-  type: "input",
-  inputType: "range",
-  musicText: "Music Volume",
-  sfxText: "SFX Volume",
-};
-
-const muteButton = {
-  type: "button",
-  text: "Mute Music",
-  musicText: "Mute Music",
-  sfxText: "Mute SFX",
-};
-
-const keys = {
+const STORAGE_KEYS = {
     musicVol: "musicVol",
     sfxVolume: "sfxVolume",
     musicMuted: "musicMuted",
     sfxMuted: "sfxMuted",
     audioTime: "audioTime",
-}
-
-const toggleSoundPanel = () => {
-  if (soundSettings.contains(musicVol)) {
-    soundSettings.removeChild(musicVol);
-    soundSettings.removeChild(musicMuteButton);
-    soundSettings.removeChild(sfxVol);
-    soundSettings.removeChild(sfxMuteButton);
-  } else {
-    soundSettings.appendChild(musicVol);
-    soundSettings.appendChild(musicMuteButton);
-    soundSettings.appendChild(sfxVol);
-    soundSettings.appendChild(sfxMuteButton);
-  }
 };
 
-const saveVolume = (storageKey, value) => {
-    localStorage.setItem(storageKey, value);
+// -- Storage --
+
+const saveValue = (key, value) => localStorage.setItem(key, value);
+const loadFloat = (key) => parseFloat(localStorage.getItem(key));
+const loadBool = (key) => localStorage.getItem(key) === "true";
+const toggleMuted = (key) => saveValue(key, !loadBool(key));
+
+const initStorageDefaults = () => {
+    const defaults = [
+        [STORAGE_KEYS.musicVol, 0.1],
+        [STORAGE_KEYS.sfxVolume, 0.5],
+        [STORAGE_KEYS.musicMuted, false],
+        [STORAGE_KEYS.sfxMuted, false],
+        [STORAGE_KEYS.audioTime, 0],
+    ];
+    for (const [key, value] of defaults) {
+        if (localStorage.getItem(key) === null) saveValue(key, value);
+    }
 };
 
-const getVolume = (storageKey) => {
-    return localStorage.getItem(storageKey);
+const saveAudioTime = (time) => saveValue(STORAGE_KEYS.audioTime, time);
+const loadAudioTime = () => loadFloat(STORAGE_KEYS.audioTime);
+
+// -- DOM Helpers --
+
+const createAudioSection = (label, volKey) => {
+    const section = document.createElement("div");
+    section.classList.add("audio-section");
+
+    const slider = document.createElement("input");
+    slider.setAttribute("type", "range");
+    slider.setAttribute("id", volKey);
+    slider.classList.add("slider");
+    slider.value = loadFloat(volKey) * 100;
+
+    const muteBtn = document.createElement("button");
+    muteBtn.innerText = `Mute ${label}`;
+    muteBtn.classList.add("mute-button");
+
+    section.appendChild(slider);
+    section.appendChild(muteBtn);
+
+    return { section, slider, muteBtn };
 };
 
-const updateVolume = (storageKey, value) => {
-    const audioElement = document.getElementById(storageKey);
-    saveVolume(storageKey, value);
-}
+// -- Initialization --
 
-const toggleMuted = (storageKey) => {
-    const isMuted = getMutedStatus(storageKey);
-    localStorage.setItem(storageKey, !isMuted);
-};
-
-const getMutedStatus = (storageKey) => {
-    return localStorage.getItem(storageKey) === "true";
-};
-
-// save current audio time before switching pages
-const updateAudioTime = (time) => {
-};
-
-// get audio time from storage and update audio on page load
-const setAudioTime = (time) => {
-    localStorage.setItem(keys.audioTime, time);
-};
-
-//
-//    Local Storage Initialization
-//
-
-localStorage.setItem(keys.musicVol, 0.1);
-localStorage.setItem(keys.sfxVolume, 0.5);
-localStorage.setItem(keys.musicMuted, false);
-localStorage.setItem(keys.sfxMuted, false);
-localStorage.setItem(keys.audioTime, 0);
-
-//
-//    Sound Panel Initialization
-//
-
-// create a div that shows in the bottom right-hand corner of all pages, for now focus on working in index.js
-const soundSettings = document.createElement("div");
+initStorageDefaults();
 
 const startDiv = document.getElementById("start");
-startDiv.appendChild(soundSettings);
 
-//Add element IDs that match storage keys for easier access when updating values
+const soundSettingsContainer = document.createElement("div");
+soundSettingsContainer.classList.add("audio-settings-container");
+startDiv.appendChild(soundSettingsContainer);
+
+const soundSettings = document.createElement("dialog");
+soundSettings.classList.add("audio-panel");
+soundSettingsContainer.appendChild(soundSettings);
 
 const soundPanelButton = document.createElement("button");
-soundPanelButton.innerText = "Sound Settings"; // replace with speaker icon
-soundSettings.appendChild(soundPanelButton);
+soundPanelButton.innerText = "Sound Settings";
+soundPanelButton.classList.add("audio-toggle");
+soundSettingsContainer.appendChild(soundPanelButton);
 
-const musicVol = document.createElement(inputSlider.type);
-musicVol.setAttribute("id", keys.musicVol);
-musicVol.innerText = inputSlider.musicText;
-musicVol.setAttribute("type", inputSlider.inputType);
-musicVol.value = getVolume(keys.musicVol) * 100;
+const { section: musicSection, slider: musicVol, muteBtn: musicMuteButton } =
+    createAudioSection("Music", STORAGE_KEYS.musicVol);
 
-const musicMuteButton = document.createElement(muteButton.type);
-musicMuteButton.innerText = muteButton.musicText;
+const { section: sfxSection, slider: sfxVol, muteBtn: sfxMuteButton } =
+    createAudioSection("SFX", STORAGE_KEYS.sfxVolume);
 
-const sfxVol = document.createElement(inputSlider.type);
-sfxVol.innerText = inputSlider.sfxText;
-sfxVol.setAttribute("type", inputSlider.inputType);
-sfxVol.value = getVolume(keys.sfxVolume);
-
-const sfxMuteButton = document.createElement(muteButton.type);
-sfxMuteButton.innerText = muteButton.sfxText;
-
-//
-// Audio Initialization
-//
+soundSettings.appendChild(musicSection);
+soundSettings.appendChild(sfxSection);
 
 const musicAudio = document.createElement("audio");
 musicAudio.setAttribute("autoplay", true);
 musicAudio.setAttribute("id", "musicAudio");
 musicAudio.setAttribute("loop", true);
+musicAudio.volume = loadFloat(STORAGE_KEYS.musicVol);
 
 const musicSource = document.createElement("source");
-musicSource.setAttribute("src", "/assets/music/Magic Scout - Cottages.mp3");
+musicSource.setAttribute("src", "/assets/music/Magic Scout - Nothern Glade.mp3");
 musicSource.setAttribute("type", "audio/mpeg");
 musicAudio.appendChild(musicSource);
-
-musicAudio.volume = getVolume(keys.musicVol);
 soundSettings.appendChild(musicAudio);
 
-// Play Magic Scout - Cottage in Main Menu, Northern Glade in Game
+// -- Event Listeners --
 
-
-//
-//   Event Listeners
-//
-
-soundPanelButton.addEventListener("click", toggleSoundPanel);
+soundPanelButton.addEventListener("click", () => {
+    soundSettings.open ? soundSettings.close() : soundSettings.show();
+});
 
 musicVol.addEventListener("input", (e) => {
-    updateVolume(keys.musicVol, e.target.value / 100);
-    musicAudio.volume = getVolume(keys.musicVol);
+    const vol = e.target.value / 100;
+    saveValue(STORAGE_KEYS.musicVol, vol);
+    musicAudio.volume = loadBool(STORAGE_KEYS.musicMuted) ? 0 : vol;
 });
 
 musicMuteButton.addEventListener("click", () => {
-    toggleMuted(keys.musicMuted);
-    musicAudio.volume = getMutedStatus(keys.musicMuted) ? 0 : getVolume(keys.musicVol);
+    toggleMuted(STORAGE_KEYS.musicMuted);
+    musicAudio.volume = loadBool(STORAGE_KEYS.musicMuted) ? 0 : loadFloat(STORAGE_KEYS.musicVol);
+});
+
+sfxVol.addEventListener("input", (e) => {
+    saveValue(STORAGE_KEYS.sfxVolume, e.target.value / 100);
+});
+
+sfxMuteButton.addEventListener("click", () => {
+    toggleMuted(STORAGE_KEYS.sfxMuted);
 });

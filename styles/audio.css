@@ -1,0 +1,41 @@
+.audio-settings-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    dialog {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+    }
+}
+
+.audio-panel {
+    display: none;
+}
+
+.audio-panel[open] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.audio-toggle { 
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+}
+
+.audio-section {
+    display: flex;
+    gap: .5em;
+}
